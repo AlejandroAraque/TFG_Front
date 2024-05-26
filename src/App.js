@@ -9,7 +9,11 @@ import LoginForm from './users/components/LoginForm';
 import ProfilePage from './componentes/ProfilePage';
 import Logout from './users/components/Logout';
 import {useAuth} from "./users/AuthProvider";
-import DownloadDatasets from "./datasets/DownloadDatasets"; // Importamos PrivateRoute
+import DownloadDatasets from "./datasets/DownloadDatasets";
+import ReceivedAccessPage from "./datasets/ReceivedAccessPage";
+import RequestedAccessPage from "./datasets/RequestedAccessPage";
+import MyDatasetsPage from "./datasets/MyDatasetsPage";
+import UploadDataset from "./datasets/UploadDataset"; // Importamos PrivateRoute
 
 function App() {
     const { isAuthenticated } = useAuth();
@@ -23,6 +27,11 @@ function App() {
                     <Route path="login" element={<LoginForm />} />
                     <Route path="/logout" element={<Logout />} />
                     {isAuthenticated && <Route path="profile" element={<ProfilePage/>} />}
+                    <Route path="/upload-datasets" element={<UploadDataset/>} />
+                    <Route path="/accessRequest" element={<RequestedAccessPage/>} />
+                    <Route path="/recieved-accessRequest" element={<ReceivedAccessPage/>} />
+                    <Route path="/myDatasets" element={<MyDatasetsPage/>} />
+
                     <Route path="/download-datasets" element={<DownloadDatasets/>} />
                     <Route path="*" element={<NoPage />} />
                 </Route>

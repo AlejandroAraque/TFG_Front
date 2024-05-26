@@ -2,30 +2,51 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../users/AuthProvider';
 
-const DownloadDatasets = () => {
-    const [datasets, setDatasets] = useState([]);
+const RequestedAccessPage = () => {
+    const [requestedDatasets, setRequestedDatasets] = useState([]);
+    const { isAuthenticated } = useAuth();
     const [selectedDataset, setSelectedDataset] = useState(null);
     const [termsAccepted, setTermsAccepted] = useState(false);
-    const { isAuthenticated, user } = useAuth();
 
     useEffect(() => {
-        const fetchDatasets = async () => {
+        const fetchRequestedDatasets = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/api/v1/auth/datasets');
-                setDatasets(response.data);
+                const token = localStorage.getItem('refresh_token');
+                const response = await axios.get('http://localhost:8080/api/v1/auth/access-requests/requested', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                setRequestedDatasets(response.data);
             } catch (error) {
-                console.error('Error fetching datasets', error);
+                console.error('Error fetching requested datasets', error);
             }
         };
 
-        fetchDatasets();
-    }, []);
+        if (isAuthenticated) {
+            fetchRequestedDatasets();
+        }
+    }, [isAuthenticated]);
 
-    const handleDownload = async (dataset) => {
-        console.log(dataset)
+    const handleDownload = async (request) => {
+        const dataset = {
+            id: request.datasetId,
+            access: request.status === 'approved' ? 'public' : 'private',
+            name: request.datasetName,
+            description: request.datasetDescription,
+            price: request.datasetPrice,
+            date: request.datasetDate,
+            termsOfUse: request.datasetTermsOfUse,
+        };
+
         if (dataset.access === 'public') {
             try {
-                const response = await axios.get(`http://localhost:8080/api/v1/auth/datasets/download/${dataset.id}`);
+                const token = localStorage.getItem('refresh_token');
+                const response = await axios.get(`http://localhost:8080/api/v1/auth/datasets/download/${dataset.id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
                 const { content, fileType } = response.data;
 
                 const contentType = fileType === 'json' ? 'application/json' : 'text/csv';
@@ -76,19 +97,25 @@ const DownloadDatasets = () => {
 
     return (
         <div>
-            <h2>MarketPlace de Datasets</h2>
+            <h2>Mis Solicitudes de Acceso</h2>
             <div>
-                {datasets.map(({ dataset, username }) => (
-                    <div key={dataset.id} className="dataset-item">
-                        <h3>{dataset.name}</h3>
-                        <p>{dataset.description}</p>
-                        <p>Proveedor: {username}</p>
-                        <p>Precio: {dataset.price}$</p>
-                        <p>Acceso: {dataset.access}</p>
-                        <p>Fecha: {new Date(dataset.date).toLocaleDateString()}</p>
-                        <button onClick={() => handleDownload(dataset)}>Descargar</button>
-                    </div>
-                ))}
+                {requestedDatasets.length > 0 ? (
+                    requestedDatasets.map(request => (
+                        <div key={request.id} className="request-item">
+                            <h3>Dataset: {request.datasetName}</h3>
+                            <p>Descripción: {request.datasetDescription}</p>
+                            <p>Precio: {request.datasetPrice}</p>
+                            <p>Fecha: {new Date(request.datasetDate).toLocaleDateString()}</p>
+                            <p>Estado: {request.status}</p>
+                            <p>Mensaje: {request.message}</p>
+                            {request.status === 'approved' && (
+                                <button onClick={() => handleDownload(request)}>Descargar Dataset</button>
+                            )}
+                        </div>
+                    ))
+                ) : (
+                    <p>No has solicitado ningún dataset.</p>
+                )}
             </div>
             {selectedDataset && selectedDataset.access === 'private' && (
                 <div>
@@ -101,4 +128,4 @@ const DownloadDatasets = () => {
     );
 };
 
-export default DownloadDatasets;
+export default RequestedAccessPage;

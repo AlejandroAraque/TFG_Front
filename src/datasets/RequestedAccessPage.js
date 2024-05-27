@@ -96,8 +96,8 @@ const RequestedAccessPage = () => {
     };
 
     return (
-        <div className="requested-access-page">
-            <h2 className="page-title">Mis Solicitudes de Acceso</h2>
+        <div>
+            <h2 className="text-light text-center mb-4 mt-4">Mis Solicitudes de Acceso</h2>
             <div className="requests-container">
                 {requestedDatasets.length > 0 ? (
                     requestedDatasets.map(request => (
@@ -106,8 +106,13 @@ const RequestedAccessPage = () => {
                             <p>Descripción: {request.datasetDescription}</p>
                             <p>Precio: {request.datasetPrice}$</p>
                             <p>Fecha: {new Date(request.datasetDate).toLocaleDateString()}</p>
-                            <p>Estado: {request.status}</p>
                             <p>Mensaje: {request.message}</p>
+                            <p>
+                                Estado: {request.status} {request.status === 'approved' && <i className="text-success fa-solid fa-circle-check"></i>}
+                                {request.status === 'rejected' && <i className="text-danger fa-solid fa-circle-xmark"></i>}
+                                {request.status === 'pendiente' && <i className="fa-solid fa-clock"></i>}
+                            </p>
+
                             {request.status === 'approved' && (
                                 <button onClick={() => handleDownload(request)} className="btn-download">Descargar Dataset</button>
                             )}
@@ -118,10 +123,10 @@ const RequestedAccessPage = () => {
                 )}
             </div>
             {selectedDataset && selectedDataset.access === 'private' && (
-                <div className="terms-container">
+                <div>
                     <h3>Aceptar Términos de Uso</h3>
                     <p>{selectedDataset.termsOfUse}</p>
-                    <button onClick={handleAcceptTerms} className="btn-accept-terms">Aceptar Términos y Solicitar Acceso</button>
+                    <button onClick={handleAcceptTerms}>Aceptar Términos y Solicitar Acceso</button>
                 </div>
             )}
         </div>

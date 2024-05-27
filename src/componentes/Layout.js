@@ -4,7 +4,7 @@ import Footer from './Footer';
 
 const Layout = () => {
     return (
-        <div className="app-wrapper">
+        <div className="app-wrapper d-flex ">
             <Header />
             <div className="main-content position-relative">
                 <Outlet />

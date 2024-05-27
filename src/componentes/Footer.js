@@ -3,9 +3,9 @@ import React from 'react';
 const Footer = () => (
     <div>
 
-        <br/>
-        <footer className="footer"> {/* Aplicar la clase de estilo */}
-            <p className="text-center">
+
+        <footer className="footer ">
+            <p className="text-center text-light p-4 mb-0">
                 © 2024 DATASHARE+. Todos los derechos reservados.
             </p>
         </footer>

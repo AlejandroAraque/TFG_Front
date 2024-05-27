@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import {useAuth} from "../users/AuthProvider";
+import {useNavigate} from "react-router-dom";
 
 const UploadDatasetPage = () => {
     const [dataset, setDataset] = useState({
@@ -13,6 +15,9 @@ const UploadDatasetPage = () => {
     });
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState(''); // 'success' or 'error'
+    const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+    const { isAuthenticated, user } = useAuth();
+    const navigate = useNavigate(); // Usa el hook useNavigate
 
     const handleChange = (e) => {
         const { name, value, type, files } = e.target;
@@ -22,6 +27,11 @@ const UploadDatasetPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!isAuthenticated) {
+            setShowLoginPrompt(true);
+            return;
+        }
 
         // Validación de campos
         if (!dataset.name || !dataset.description || !dataset.termsOfUse || !dataset.price || !dataset.date || !dataset.content) {
@@ -62,9 +72,21 @@ const UploadDatasetPage = () => {
             setMessageType('success');
         } catch (error) {
             console.error('Error al subir el dataset:', error);
-            setMessage('Error al subir el dataset. Por favor, inténtalo de nuevo.');
+            setMessage('Ha ocurrido un error, por favor intentelo e nuevo');
             setMessageType('error');
         }
+    };
+
+    const handleCloseLoginPrompt = () => {
+        setShowLoginPrompt(false);
+    };
+
+    const handleGoToLogin = () => {
+        navigate('/login');
+    };
+
+    const handleGoToRegister = () => {
+        navigate('/register');
     };
 
     return (
@@ -109,7 +131,22 @@ const UploadDatasetPage = () => {
                 </label>
                 <button type="submit">Subir Dataset</button>
             </form>
+            {showLoginPrompt && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <span className="close" onClick={handleCloseLoginPrompt}>&times;</span>
+                        <p>Debe iniciar sesión para descargar datasets.</p>
+                        <div className="d-flex ">
+                            <button onClick={handleGoToLogin} className="btn btn-custom mr-1">Log In</button>
+                            <button onClick={handleGoToRegister} className="btn btn-custom">Register</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
         </div>
+
+
     );
 };
 

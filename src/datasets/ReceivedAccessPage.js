@@ -64,9 +64,9 @@ const ReceivedAccessPage = () => {
 
     return (
         <div>
-            <h2 className="page-title">Peticiones Recibidas por Mis Datasets</h2>
-            <div className="requests-section">
-                <h3 className="text-light">Pendientes <button className="more-less" onClick={() => setShowPending(!showPending)}>{showPending ? <i className="fa-solid fa-caret-up"></i> : <i className="fa-solid fa-caret-down"></i>}</button></h3>
+            <h2 className=" text-light page-title">Peticiones Recibidas por Mis Datasets</h2>
+            <div className="requests-section ml-1">
+                <h3 className="text-light">Pendientes <i className="fa-solid fa-clock"></i><button className="more-less" onClick={() => setShowPending(!showPending)}>{showPending ? <i className="text-light fa-solid fa-caret-up"></i> : <i className="text-light  fa-solid fa-caret-down"></i>}</button></h3>
                 <div class="request-section-item">
                     {showPending && (
                         pendingRequests.length > 0 ? (
@@ -88,7 +88,7 @@ const ReceivedAccessPage = () => {
                 </div>
 
                 <div className="requests-section">
-                <h3 className="text-light">Aprobadas <button className="more-less" onClick={() => setShowApproved(!showApproved)}>{showApproved ? <i className="fa-solid fa-caret-up"></i> : <i className="fa-solid fa-caret-down"></i>}</button></h3>
+                <h3 className="text-light">Aprobadas <i className="text-success fa-solid fa-circle-check"></i><button className="more-less" onClick={() => setShowApproved(!showApproved)}>{showApproved ? <i className=" text-light fa-solid fa-caret-up"></i> : <i className="text-light  fa-solid fa-caret-down"></i>}</button></h3>
                     <div className="request-section-item">
                         {showApproved && (
                             approvedRequests.length > 0 ? (
@@ -97,7 +97,7 @@ const ReceivedAccessPage = () => {
                                         <h4>Solicitante: {request.consumerUsername}</h4>
                                         <p>Dataset: {request.datasetName}</p>
                                         <p>Mensaje: {request.message}</p>
-                                        <p>Estado: Aprobada</p>
+                                        <p>Estado: Aprobada <i className="text-success fa-solid fa-circle-check"></i></p>
                                     </div>
                                 ))
                             ) : (
@@ -108,7 +108,7 @@ const ReceivedAccessPage = () => {
                 </div>
 
                 <div className="requests-section">
-                <h3 className="text-light">Rechazadas <button className="more-less " onClick={() => setShowRejected(!showRejected)}>{showRejected ? <i className="fa-solid fa-caret-up"></i> : <i className="fa-solid fa-caret-down"></i>}</button></h3>
+                <h3 className="text-light">Rechazadas <i className="text-danger fa-solid fa-circle-xmark"></i><button className="more-less " onClick={() => setShowRejected(!showRejected)}>{showRejected ? <i className="text-light fa-solid fa-caret-up"></i> : <i className="text-light  fa-solid fa-caret-down"></i>}</button></h3>
                     <div className="request-section-item">
                         {showRejected && (
                             rejectedRequests.length > 0 ? (
@@ -117,7 +117,7 @@ const ReceivedAccessPage = () => {
                                         <h4>Solicitante: {request.consumerUsername}</h4>
                                         <p>Dataset: {request.datasetName}</p>
                                         <p>Mensaje: {request.message}</p>
-                                        <p>Estado: Rechazada</p>
+                                        <p>Estado: Rechazada  <i className="text-danger fa-solid fa-circle-xmark"></i></p>
                                     </div>
                                 ))
                             ) : (

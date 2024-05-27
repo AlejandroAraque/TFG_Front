@@ -4,7 +4,7 @@ import { useAuth } from '../users/AuthProvider';
 import '../App.css';
 
 const Header = () => {
-    const { isAuthenticated, user, logout } = useAuth();
+    const { isAuthenticated} = useAuth();
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light">

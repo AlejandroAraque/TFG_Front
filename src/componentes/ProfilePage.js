@@ -63,7 +63,7 @@ const ProfilePage = () => {
 
             {userData && (
                 <div className="card">
-                    <h2 className="text-center text-bold">Profile</h2>
+                    <h2 className="text-center text-bold mt-2">Profile</h2>
                     <div className="card-body">
                         <p className="card-text"><strong>Username:</strong> {userData.username}</p>
                         <p className="card-text"><strong>Email:</strong> {userData.email}</p>

@@ -68,7 +68,7 @@ const UploadDatasetPage = () => {
     };
 
     return (
-        <div>
+        <div className="upload-dataset-page">
             <h2>Subir Dataset</h2>
             {message && (
                 <div className={`message ${messageType}`}>

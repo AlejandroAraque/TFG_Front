@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import {useAuth} from "../AuthProvider";
+import { useAuth } from "../AuthProvider";
 
 const RegisterForm = () => {
     const navigate = useNavigate();
-    const { login } = useAuth(); // Importa la función login del contexto de autenticación
+    const { login } = useAuth();
     const [formData, setFormData] = useState({
         username: '',
         password: '',
@@ -23,7 +23,7 @@ const RegisterForm = () => {
         try {
             const response = await axios.post('http://localhost:8080/api/v1/auth/register', formData);
             const { access_token } = response.data;
-            login(access_token); // Llama a la función login del contexto de autenticación
+            login(access_token);
             setMessage('Usuario registrado correctamente.');
             navigate('/'); // Redirige a la página de dashboard después del registro exitoso
         } catch (error) {
@@ -32,23 +32,49 @@ const RegisterForm = () => {
     };
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Nombre de usuario:</label>
-                    <input type="text" name="username" value={formData.username} onChange={handleChange} required />
-                </div>
-                <div>
-                    <label>Contraseña:</label>
-                    <input type="password" name="password" value={formData.password} onChange={handleChange} required />
-                </div>
-                <div>
-                    <label>Correo electrónico:</label>
-                    <input type="email" name="email" value={formData.email} onChange={handleChange} required />
-                </div>
-                <button type="submit">Registrarse</button>
-            </form>
-            {message && <p>{message}</p>}
+        <div className="card bg-light border-dark">
+            <h5 className="card-header">Registrarse</h5>
+            <div className="card-body">
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group row">
+                        <label htmlFor="username" className="col-md-3 col-form-label">Nombre de usuario:</label>
+                        <div className="col-md-4">
+                            <input type="text" id="username" name="username" className="form-control"
+                                   value={formData.username}
+                                   onChange={handleChange}
+                                   autoFocus
+                                   required />
+                            <div className="invalid-feedback">Este campo es obligatorio</div>
+                        </div>
+                    </div>
+                    <div className="form-group row">
+                        <label htmlFor="password" className="col-md-3 col-form-label">Contraseña:</label>
+                        <div className="col-md-4">
+                            <input type="password" id="password" name="password" className="form-control"
+                                   value={formData.password}
+                                   onChange={handleChange}
+                                   required />
+                            <div className="invalid-feedback">Este campo es obligatorio</div>
+                        </div>
+                    </div>
+                    <div className="form-group row">
+                        <label htmlFor="email" className="col-md-3 col-form-label">Correo electrónico:</label>
+                        <div className="col-md-4">
+                            <input type="email" id="email" name="email" className="form-control"
+                                   value={formData.email}
+                                   onChange={handleChange}
+                                   required />
+                            <div className="invalid-feedback">Este campo es obligatorio</div>
+                        </div>
+                    </div>
+                    <div className="form-group row">
+                        <div className="offset-md-3 col-md-1">
+                            <button id="button" type="submit" className="btn btn-primary">Registrarse</button>
+                        </div>
+                    </div>
+                </form>
+                {message && <p className="alert alert-info">{message}</p>}
+            </div>
         </div>
     );
 };

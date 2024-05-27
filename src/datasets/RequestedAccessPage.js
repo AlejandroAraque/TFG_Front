@@ -96,20 +96,20 @@ const RequestedAccessPage = () => {
     };
 
     return (
-        <div>
-            <h2>Mis Solicitudes de Acceso</h2>
-            <div>
+        <div className="requested-access-page">
+            <h2 className="page-title">Mis Solicitudes de Acceso</h2>
+            <div className="requests-container">
                 {requestedDatasets.length > 0 ? (
                     requestedDatasets.map(request => (
                         <div key={request.id} className="request-item">
                             <h3>Dataset: {request.datasetName}</h3>
                             <p>Descripción: {request.datasetDescription}</p>
-                            <p>Precio: {request.datasetPrice}</p>
+                            <p>Precio: {request.datasetPrice}$</p>
                             <p>Fecha: {new Date(request.datasetDate).toLocaleDateString()}</p>
                             <p>Estado: {request.status}</p>
                             <p>Mensaje: {request.message}</p>
                             {request.status === 'approved' && (
-                                <button onClick={() => handleDownload(request)}>Descargar Dataset</button>
+                                <button onClick={() => handleDownload(request)} className="btn-download">Descargar Dataset</button>
                             )}
                         </div>
                     ))
@@ -118,10 +118,10 @@ const RequestedAccessPage = () => {
                 )}
             </div>
             {selectedDataset && selectedDataset.access === 'private' && (
-                <div>
+                <div className="terms-container">
                     <h3>Aceptar Términos de Uso</h3>
                     <p>{selectedDataset.termsOfUse}</p>
-                    <button onClick={handleAcceptTerms}>Aceptar Términos y Solicitar Acceso</button>
+                    <button onClick={handleAcceptTerms} className="btn-accept-terms">Aceptar Términos y Solicitar Acceso</button>
                 </div>
             )}
         </div>

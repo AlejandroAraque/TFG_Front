@@ -55,7 +55,7 @@ const LoginForm = () => {
                           className="needs-validation" noValidate
                           onSubmit={handleSubmit}>
                         <div className="form-group row">
-                            <label htmlFor="username" className="col-md-3 col-form-label">username</label>
+                            <label htmlFor="username" className="col-md-3 col-form-label">Username</label>
                             <div className="col-md-4">
                                 <input type="username" id="username" name="username" className="form-control"
                                        value={formData.username}
@@ -66,7 +66,7 @@ const LoginForm = () => {
                             </div>
                         </div>
                         <div className="form-group row">
-                            <label htmlFor="password" className="col-md-3 col-form-label">Contraseña</label>
+                            <label htmlFor="password" className="col-md-3 col-form-label">Password</label>
                             <div className="col-md-4">
                                 <input type="password" id="password" name="password" className="form-control"
                                        value={formData.password}
@@ -76,7 +76,7 @@ const LoginForm = () => {
                             </div>
                         </div>
                         <div className="form-group row">
-                            <div className="offset-md-3 col-md-1">
+                            <div className="offset-md-3 col-md-5">
                                 <button id="button" type="submit" className="btn btn-primary">Iniciar Sesión</button>
                             </div>
                         </div>

@@ -76,8 +76,8 @@ const DownloadDatasets = () => {
 
     return (
         <div>
-            <h2>MarketPlace de Datasets</h2>
-            <div>
+            <h2 className="text-light">MARKETPLACE</h2>
+            <div className="datasets-container">
                 {datasets.map(({ dataset, username }) => (
                     <div key={dataset.id} className="dataset-item">
                         <h3>{dataset.name}</h3>
@@ -86,15 +86,15 @@ const DownloadDatasets = () => {
                         <p>Precio: {dataset.price}$</p>
                         <p>Acceso: {dataset.access}</p>
                         <p>Fecha: {new Date(dataset.date).toLocaleDateString()}</p>
-                        <button onClick={() => handleDownload(dataset)}>Descargar</button>
+                        <button onClick={() => handleDownload(dataset)} className="btn btn-custom ">Descargar</button>
                     </div>
                 ))}
             </div>
             {selectedDataset && selectedDataset.access === 'private' && (
-                <div>
+                <div className="terms-container">
                     <h3>Aceptar Términos de Uso</h3>
                     <p>{selectedDataset.termsOfUse}</p>
-                    <button onClick={handleAcceptTerms}>Aceptar Términos y Solicitar Acceso</button>
+                    <button onClick={handleAcceptTerms} className="btn btn-custom">Aceptar Términos y Solicitar Acceso</button>
                 </div>
             )}
         </div>

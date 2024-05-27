@@ -42,8 +42,8 @@ const MyDatasets = () => {
 
     return (
         <div>
-            <h2>Mis Datasets</h2>
-            <div>
+            <h2 className="text-light">Mis Datasets</h2>
+            <div className="d-flex">
                 {myDatasets.length > 0 ? (
                     myDatasets.map(dataset => (
                         <div key={dataset.id} className="dataset-item">
@@ -51,11 +51,12 @@ const MyDatasets = () => {
                             <p>{dataset.description}</p>
                             <p>Precio: {dataset.price}</p>
                             <p>Fecha: {new Date(dataset.date).toLocaleDateString()}</p>
-                            <button onClick={() => handleDelete(dataset.id)}>Eliminar</button>
+                            <button onClick={() => handleDelete(dataset.id)} className="btn btn-custom"><i
+                                className="fa-solid fa-trash"></i> Delete Item</button>
                         </div>
                     ))
                 ) : (
-                    <p>No tienes datasets.</p>
+                    <p className="text-light">No tienes datasets.</p>
                 )}
             </div>
         </div>

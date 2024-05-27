@@ -4,7 +4,7 @@ import RegisterForm from './users/components/RegisterForm';
 import Layout from './componentes/Layout';
 import Home from './componentes/Home';
 import NoPage from './componentes/NoPage';
-import './App.css';
+
 import LoginForm from './users/components/LoginForm';
 import ProfilePage from './componentes/ProfilePage';
 import Logout from './users/components/Logout';
@@ -14,6 +14,7 @@ import ReceivedAccessPage from "./datasets/ReceivedAccessPage";
 import RequestedAccessPage from "./datasets/RequestedAccessPage";
 import MyDatasetsPage from "./datasets/MyDatasetsPage";
 import UploadDataset from "./datasets/UploadDataset"; // Importamos PrivateRoute
+import './App.css';
 
 function App() {
     const { isAuthenticated } = useAuth();
